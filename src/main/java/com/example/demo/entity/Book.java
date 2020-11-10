@@ -8,16 +8,14 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int bookId;
-
-
+    private int id;
     private String bookName;
 
-    public int getBookId() {
-        return bookId;
+    public int getId() {
+        return id;
     }
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setId(int id) {
+        this.id = id;
     }
     public String getBookName() {
         return bookName;
