@@ -4,43 +4,47 @@ import com.example.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/book")
 public class BookController {
 
-    @Autowired
-    BookService bookService;
+    final BookService bookService;
 
-    @GetMapping("/book")
-    public List<Book> getUsers() {
+    @Autowired
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @GetMapping
+    public List<Book> getBooks() {
 
         return bookService.getBooks();
     }
 
-    @GetMapping("/book/{id}")
-    public Optional<Book> getUser(@PathVariable(value="id") int id) {
+    @GetMapping("/{id}")
+    public Optional<Book> getBook(@PathVariable(value="id") int id) {
 
         return bookService.getBook(id);
     }
 
-    @PostMapping("/book")
-    public Book addBook(@RequestBody Book book){
+    @PostMapping
+    public Book addBook(@Valid @RequestBody Book book){
 
         return bookService.saveBook(book);
     }
 
-    @PutMapping("/book")
-    public Book updateBook(@RequestBody Book book){
+    @PutMapping
+    public Book updateBook(@Valid @RequestBody Book book){
 
         return bookService.saveBook(book);
     }
 
-    @DeleteMapping("/book/{id}")
+    @DeleteMapping("/{id}")
     public int deleteBook(@PathVariable(value="id") int id){
-
         bookService.deleteBook(id);
         return id;
     }
