@@ -34,18 +34,18 @@ public class RestResponseEntityExceptionHandler
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = { TypeMismatchException.class })
-    protected ResponseEntity<Object> handleTypeMismatch(
-            Exception ex, WebRequest request) {
-
-        String responseMessage = "Please enter valid type of value";
-        List<Object> objectList = new ArrayList<>();
-        objectList.add(responseMessage);
-        ApiResponse apiResponse = new ApiResponse(HttpStatus.NOT_FOUND.value(), "Failed", null, objectList);
-
-        return handleExceptionInternal(ex, apiResponse,
-                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-    }
+//    @ExceptionHandler(value = { TypeMismatchException.class })
+//    protected ResponseEntity<Object> handleTypeMismatch(
+//            Exception ex, WebRequest request) {
+//
+//        String responseMessage = "Please enter valid type of value";
+//        List<Object> objectList = new ArrayList<>();
+//        objectList.add(responseMessage);
+//        ApiResponse apiResponse = new ApiResponse(HttpStatus.NOT_FOUND.value(), "Failed", null, objectList);
+//
+//        return handleExceptionInternal(ex, apiResponse,
+//                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+//    }
 
     @ExceptionHandler(value = { EmptyResultDataAccessException.class, NoSuchElementException.class })
     protected ResponseEntity<Object> handleEmptyResult(
