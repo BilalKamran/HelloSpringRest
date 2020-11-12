@@ -1,12 +1,15 @@
 package com.example.demo.controller;
-import com.example.demo.entity.Book;
+
+import com.example.demo.response.ApiResponse;
+import com.example.demo.payload.BookPayload;
+import com.example.demo.exception.ApiException;
 import com.example.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/book")
@@ -20,32 +23,42 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks() {
+    public ApiResponse getBooks() {
 
-        return bookService.getBooks();
+        return Optional.of(bookService.getBooks())
+                .map(data-> new ApiResponse(HttpStatus.OK.value(),"Success", data, null))
+                .orElseThrow(()->new ApiException("Api Exception Occured"));
     }
 
     @GetMapping("/{id}")
-    public Optional<Book> getBook(@PathVariable(value="id") int id) {
+    public ApiResponse getBook(@PathVariable(value="id") Integer id) {
 
-        return bookService.getBook(id);
+        return Optional.of(bookService.getBook(id))
+                .map(data-> new ApiResponse(HttpStatus.OK.value(),"Success", data, null))
+                .orElseThrow(()->new ApiException("Api Exception Occured"));
     }
 
     @PostMapping
-    public Book addBook(@Valid @RequestBody Book book){
+    public ApiResponse addBook(@Valid @RequestBody BookPayload bookPayload){
 
-        return bookService.saveBook(book);
+        return Optional.of(bookService.addBook(bookPayload))
+                .map(data-> new ApiResponse(HttpStatus.OK.value(),"Success", data, null))
+                .orElseThrow(()->new ApiException("Api Exception Occured"));
     }
 
-    @PutMapping
-    public Book updateBook(@Valid @RequestBody Book book){
+    @PutMapping("/{id}")
+    public ApiResponse updateBook(@PathVariable(value="id") Integer id, @Valid @RequestBody BookPayload bookPayload){
 
-        return bookService.saveBook(book);
+        return Optional.of(bookService.updateBook(id, bookPayload))
+                .map(data-> new ApiResponse(HttpStatus.OK.value(),"Success", data, null))
+                .orElseThrow(()->new ApiException("Api Exception Occured"));
     }
 
     @DeleteMapping("/{id}")
-    public int deleteBook(@PathVariable(value="id") int id){
-        bookService.deleteBook(id);
-        return id;
+    public ApiResponse deleteBook(@PathVariable(value="id") Integer id){
+
+        return Optional.of(bookService.deleteBook(id))
+                .map(data-> new ApiResponse(HttpStatus.OK.value(),"Success", data, null))
+                .orElseThrow(()->new ApiException("Api Exception Occured"));
     }
 }

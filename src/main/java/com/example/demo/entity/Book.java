@@ -1,7 +1,8 @@
 package com.example.demo.entity;
 
+import com.example.demo.payload.BookPayload;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "book")
@@ -9,35 +10,48 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    @NotBlank
-    private String bookName;
+    private String name;
 
-    @Positive
-    private int pages;
+    private Integer pages;
 
-    @AssertFalse
     private boolean isHoly;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getBookName() {
-        return bookName;
-    }
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public Book() {
     }
 
-    public int getPages() {
+    public Book(BookPayload bookPayload) {
+        this.name = bookPayload.getName();
+        this.pages = bookPayload.getPages();
+        this.isHoly = bookPayload.isHoly();
+    }
+
+    public Book(Integer id, BookPayload bookPayload) {
+        this.id = id;
+        this.name = bookPayload.getName();
+        this.pages = bookPayload.getPages();
+        this.isHoly = bookPayload.isHoly();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String bookName) {
+        this.name = bookName;
+    }
+
+    public Integer getPages() {
         return pages;
     }
 
-    public void setPages(int pages) {
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
 
@@ -47,5 +61,18 @@ public class Book {
 
     public void setHoly(boolean holy) {
         isHoly = holy;
+    }
+
+    public void setBook(BookPayload bookPayload){
+        this.name = bookPayload.getName();
+        this.pages = bookPayload.getPages();
+        this.isHoly = bookPayload.isHoly();
+    }
+
+    public void setBook(Integer id, BookPayload bookPayload){
+        this.id = id;
+        this.name = bookPayload.getName();
+        this.pages = bookPayload.getPages();
+        this.isHoly = bookPayload.isHoly();
     }
 }

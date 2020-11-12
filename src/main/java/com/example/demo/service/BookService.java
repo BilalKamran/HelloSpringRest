@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Book;
+import com.example.demo.payload.BookPayload;
+import com.example.demo.response.BookResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,12 +9,14 @@ import java.util.Optional;
 
 @Service
 public interface BookService {
-    List<Book> getBooks();
+    List<BookResponse> getBooks();
 
-    Optional<Book> getBook(int id);
+    BookResponse getBook(Integer id);
 
-    Book saveBook(Book book);
+    BookResponse addBook(BookPayload bookPayload);
 
-    void deleteBook(int id);
+    BookResponse updateBook(Integer id, BookPayload bookPayload);
+
+    Integer deleteBook(Integer id);
 
 }
